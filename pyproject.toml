@@ -1,0 +1,33 @@
+[tool.black]
+line-length = 99
+skip-string-normalization = true
+target-version = ["py38", "py39"]
+include = "\\.pyi?$"
+exclude = '''
+/(
+    \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | dist
+  | generated
+)/
+'''
+
+[tool.isort]
+profile = "black"
+line_length = 99
+atomic = true
+default_section = "THIRDPARTY"
+known_first_party = ["src", "lib", "tests"]
+
+[tool.flake8]
+max-line-length = 99
+max-complexity = 14
+select = ["W", "E", "F"]
+ignore = ["E203", "W503"]
