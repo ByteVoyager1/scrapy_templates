@@ -11,7 +11,7 @@ class RunnerProtocol(Protocol):
 class CrawlerProtocol(Protocol):
     runner: RunnerProtocol
 
-    def run_crawler(self):
+    async def run_crawler(self):
         ...
 
     def stop_crawler(self):
