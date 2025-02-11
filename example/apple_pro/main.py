@@ -9,7 +9,7 @@ from ..apple_pro.spiders.spider_apple_pro import AppleProSpider
 class AppleProCrawler(CrawlerProtocol):
     runner: RunnerProtocol
 
-    def run_crawler(self):
+    async def run_crawler(self):
         d = self.runner.crawl(AppleProSpider)
         d.addBoth(lambda _: reactor.stop())  # noqa
         reactor.run()  # noqa
