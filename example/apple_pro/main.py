@@ -1,18 +1,18 @@
 from dataclasses import dataclass
-from twisted.internet import reactor
 
-from .protocols import CrawlerProtocol, RunnerProtocol
-from ..apple_pro.spiders.spider_apple_pro import AppleProSpider
+from lib.parsers.apple_pro.spiders.spider_apple_pro import AppleProSpider
+from lib.protocols import CrawlerProtocol, RunnerProtocol
 
 
 @dataclass
 class AppleProCrawler(CrawlerProtocol):
     runner: RunnerProtocol
+    crawler: AppleProSpider = None
 
     async def run_crawler(self):
-        d = self.runner.crawl(AppleProSpider)
-        d.addBoth(lambda _: reactor.stop())  # noqa
-        reactor.run()  # noqa
+        self.crawler = self.runner.create_crawler(AppleProSpider)
+        self.runner.crawl(self.crawler)
 
     def stop_crawler(self):
-        self.runner.stop()
+        if self.crawler:
+            self.crawler.stop()
